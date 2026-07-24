@@ -1,0 +1,28 @@
+.time-mode-p {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.time-mode-p span {
+  font-size: 16px;
+}
+
+.time-mode-h1 {
+  font-size: 96px;
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: 20px;
+}
+.time-mode-h1 span {
+  font-size: 48px;
+}
+.time-mode{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    
+}
