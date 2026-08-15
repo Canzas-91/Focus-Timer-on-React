@@ -1,0 +1,30 @@
+.buttons-control{
+    border: 1px solid var(--color-white);
+    padding: 0.5em; 
+    margin: 0.3em;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: transparent;
+    display: inline-block;
+}
+
+.next-button{
+    background-image: url('../assets/next-button.svg');
+    background-size: 35px 35px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.pause-button{
+    background-image: url('../assets/pause-button.svg');
+    background-size: 35px 35px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.reverse-button{
+    background-image: url('../assets/reverse-button.svg');
+    background-size: 35px 35px;
+    background-position: center;
+    background-repeat: no-repeat;
+}

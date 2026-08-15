@@ -1,3 +1,4 @@
+import '../styles/Buttons.css'
 const Button = (props) => {
     const { className } = props
     return (
