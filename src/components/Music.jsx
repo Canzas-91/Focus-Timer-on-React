@@ -1,3 +1,6 @@
+import "../styles/Music.css";
+
+
 const Music = () => {
     return (
         <div className="music">
