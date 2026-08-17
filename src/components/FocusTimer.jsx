@@ -3,26 +3,32 @@ import TimeMode from "./TimeMode"
 import Control from "./Control"
 import '../styles/FocusTimer.css'
 const FocusTimer = () => {
-    const [time, setTime] = useState(25 * 60); // 25 minutes in seconds
+    const [time, setTime] = useState(5); // 25 minutes in seconds
     const [isRunning, setIsRunning] = useState(false);
+    const [mode, setMode] = useState('Work')
 
     
     useEffect(() => {
         if (isRunning) {
-            const timer = setInterval(() => {
-                setTime((time) => {
-                    if (time <= 1){
-                        setIsRunning(false)
-                        return (25 * 60)
-                    }
-                    return time - 1
-                });
-            }, 1000);
-
-            return () => {clearInterval(timer)};
+                const timer= setInterval(() => {
+                    setTime((time) => {
+                        if (time <= 1){
+                            if (mode === 'Work'){
+                                setMode('Break')
+                                return (3)
+                            }else{
+                                setMode('Work')
+                                return (5)
+                            }
+                        }
+                        console.log(time)
+                        return time - 1
+                    });
+                }, 1000);
+                return () => {clearInterval(timer)};
         }
-    },[isRunning])
-    
+    },[isRunning, mode])
+
 
     
     const startTimer = () => {
