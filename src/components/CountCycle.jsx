@@ -1,9 +1,11 @@
 import "../styles/CountCycle.css";
 
-const CountCycle = () => {
+const CountCycle = ({cycle, changeCycle}) => {
     return (
+
+
         <div className="count-cycle">
-            <select className="timer__theme">
+            <select className="timer__theme" onChange = {(event) => {changeCycle(Number(event.target.value))}} value={cycle}>
                 <option value="1">1 цикл</option>
                 <option value="2">2 цикла</option>
                 <option value="3">3 цикла</option>

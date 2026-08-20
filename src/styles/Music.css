@@ -5,6 +5,7 @@
     border: 1px solid var(--color-white);
     border-radius: 20px;
     padding: 5px 20px;
+    gap: 20px;
 }
 .music-p{
     font-size: 24px;
