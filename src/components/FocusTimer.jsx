@@ -51,12 +51,14 @@ const FocusTimer = () => {
     }
 
     const clickNextButton = () => {
-        setClickingButton(1)
-        return console.log(clickingButton)
+        if (audioRef.current){
+            audioRef.current.currentTime += 5
+        }
     }
     const clickBackButton = () => {
-        setClickingButton(2)
-        return console.log(clickingButton)
+        if (audioRef.current){
+            audioRef.current.currentTime -= 5
+        }
     }
     
     const startTimer = () => {
