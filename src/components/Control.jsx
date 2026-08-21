@@ -3,11 +3,11 @@ import CountCycle from "./CountCycle"
 import Music from "./Music"
 import '../styles/Control.css'
 
-const Control = ({startTimer, cycle, changeCycle, clickNextButton, clickBackButton}) => {
+const Control = ({startTimer, cycle, changeCycle, clickNextButton, clickBackButton, rengeVolume}) => {
 
     return (
         <div className="control">
-            <Music />
+            <Music rengeVolume = {rengeVolume}/>
             <div className="control-buttons">
                 <Button className="reverse-button" onClick = {clickBackButton}/>
                 <Button className="pause-button" onClick = {startTimer}/>

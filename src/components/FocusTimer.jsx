@@ -5,7 +5,7 @@ import Control from "./Control"
 import '../styles/FocusTimer.css'
 const FocusTimer = () => {
     
-    const [time, setTime] = useState(25 * 60); // 25 minutes in seconds
+    const [time, setTime] = useState(25 * 60);
     const [isRunning, setIsRunning] = useState(false);
     const [mode, setMode] = useState('Work')
     const [cycle, setCycle] = useState(1)
@@ -60,6 +60,10 @@ const FocusTimer = () => {
             audioRef.current.currentTime -= 5
         }
     }
+    const rengeVolume = (volume) => {
+        volume = volume / 100;
+        audioRef.current.volume = volume
+    }
     
     const startTimer = () => {
         if (!isRunning) {
@@ -67,7 +71,6 @@ const FocusTimer = () => {
         }else {
             setIsRunning(false);
         }
-        console.log(isRunning)
     }
 
 
@@ -81,8 +84,9 @@ const FocusTimer = () => {
                 changeCycle = {changeCycle} 
                 clickNextButton = {clickNextButton}
                 clickBackButton = {clickBackButton}
+                rengeVolume = {rengeVolume}
             />
-            <audio ref = {audioRef} src = {lofi} />
+            <audio ref = {audioRef} src = {lofi} loop/>
         </div>
     )
 }

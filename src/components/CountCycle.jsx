@@ -5,7 +5,7 @@ const CountCycle = ({cycle, changeCycle}) => {
 
 
         <div className="count-cycle">
-            <select className="timer__theme" onChange = {(event) => {changeCycle(Number(event.target.value))}} value={cycle}>
+            <select className="timer__theme" onChange = {(event) => {changeCycle(Number(event.target.value))}}>
                 <option value="1">1 цикл</option>
                 <option value="2">2 цикла</option>
                 <option value="3">3 цикла</option>
