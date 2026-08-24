@@ -9,7 +9,14 @@ const FocusTimer = () => {
     const [time, setTime] = useState(25 * 60);
     const [isRunning, setIsRunning] = useState(false);
     const [mode, setMode] = useState('Work')
-    const [cycle, setCycle] = useState(1)
+    const [cycle, setCycle] = useState(() => {
+        const savedCycles = localStorage.getItem('cycle')
+        if(savedCycles){
+            return JSON.parse(savedCycles)
+        }
+        return 1
+
+    })
     const [completedCycle, setCompletedCycle] = useState(0)
     const audioRef = useRef(null)
     const [isOpen, setIsOpen] = useState(false)
@@ -19,6 +26,7 @@ const FocusTimer = () => {
         {id: 3, title: 'Lofi - 3', prew: './src/assets/lofi__prew-3.jpg', time: '3:30', music: 'src/assets/kirpichnye-pereulki-2-fb419d.mp3'}
     ])
     const [selectedTrack, setSelectedTrack] = useState(lofi)
+
 
     
 
@@ -54,8 +62,13 @@ const FocusTimer = () => {
         return audioRef.current.pause()
     },[isRunning, mode])
 
+    useEffect(() => {
+        localStorage.setItem('cycle', JSON.stringify(cycle))
+    }, [cycle])
+
     const changeCycle = (newCycle) => {
         setCycle(newCycle) 
+        console.log(cycle)
     }
 
     const clickNextButton = () => {
@@ -99,7 +112,7 @@ const FocusTimer = () => {
         <div className="focus-timer">
             <button onClick={openClick} className="choose-track" >Выбрать трек</button>
                 {isOpen && (
-                <div>
+                <div className="div__overflow">
                     {tracks.map((track) => (
                     <Track
                         key={track.id}
