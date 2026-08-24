@@ -15,6 +15,7 @@ const TimeMode = ({props}) => {
         <div className="time-mode">
             <p className="time-mode-p" mode = {mode}>Time Mode: {mode}</p>
             <h1 className="time-mode-h1">{formatTime(time)}</h1>
+            
         </div>
     )
 }
