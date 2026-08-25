@@ -20,12 +20,9 @@ const FocusTimer = () => {
     const [completedCycle, setCompletedCycle] = useState(0)
     const audioRef = useRef(null)
     const [isOpen, setIsOpen] = useState(false)
-    const [tracks, setTracks] = useState([
-        {id: 1, title: 'Lofi - 1', prew: './src/assets/lofi__prew-1.jpg', time: '2:30', music: 'src/assets/Chill_Hip-Hop_Beats_-_Long_Travel_73622991.mp3'},
-        {id: 2, title: 'Lofi - 2', prew: './src/assets/lofi__prew-2.jpg', time: '1:30', music: 'src/assets/Detskie_pesni_Spokojjnaya_fonovaya_muzyka_LO-FI_BEATS_Chillhop_Music_Japanese_Lofi_Lo_Fi_Hip_Hop_-_Lou-ajj_Ritmy_dlya_Meditacii_79645134.mp3'},
-        {id: 3, title: 'Lofi - 3', prew: './src/assets/lofi__prew-3.jpg', time: '3:30', music: 'src/assets/kirpichnye-pereulki-2-fb419d.mp3'}
-    ])
+    const [tracks, setTracks] = useState([])
     const [selectedTrack, setSelectedTrack] = useState(lofi)
+    const [addTrack, setAddTrack] = useState()
 
 
     
@@ -65,6 +62,12 @@ const FocusTimer = () => {
     useEffect(() => {
         localStorage.setItem('cycle', JSON.stringify(cycle))
     }, [cycle])
+    
+    useEffect(() => {
+        fetch('http://localhost:3001/trcks')
+            .then((response) => response.json())
+            .then(setTracks)
+    }, [])
 
     const changeCycle = (newCycle) => {
         setCycle(newCycle) 
@@ -105,12 +108,34 @@ const FocusTimer = () => {
         setSelectedTrack(track.music)
         console.log (selectedTrack)
     }   
+    const addedTracks = (title) => {
+        const newTrack = {
+            title,
+            prew: './src/assets/lofi__prew-3.jpg', 
+            time: '3:30',
+            music: 'src/assets/kirpichnye-pereulki-2-fb419d.mp3'
+        }
+
+        fetch('http://localhost:3001/trcks',{
+            method: 'POST',
+            body: JSON.stringify(newTrack)
+        })
+            .then((response) => response.json())
+            .then((addedTrack) => {
+                setTracks((prevTrack) => [...prevTrack, addedTrack])
+            })
+    }
 
 
 
     return (
         <div className="focus-timer">
             <button onClick={openClick} className="choose-track" >Выбрать трек</button>
+            <form action="" >
+                <input type="text" onChange={(event) => addedTracks(event.target.value)}/>
+                <input type="time" />
+                <button type="button">lj,fdbnm</button>
+            </form>
                 {isOpen && (
                 <div className="div__overflow">
                     {tracks.map((track) => (
