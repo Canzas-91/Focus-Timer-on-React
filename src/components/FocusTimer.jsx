@@ -4,6 +4,9 @@ import TimeMode from "./TimeMode"
 import Control from "./Control"
 import Track from "./Track"
 import '../styles/FocusTimer.css'
+import Button from "./Button"
+import Form from "./Form"
+import { jsxs } from "react/jsx-runtime"
 const FocusTimer = () => {
     
     const [time, setTime] = useState(25 * 60);
@@ -20,11 +23,20 @@ const FocusTimer = () => {
     const [completedCycle, setCompletedCycle] = useState(0)
     const audioRef = useRef(null)
     const [isOpen, setIsOpen] = useState(false)
-    const [tracks, setTracks] = useState([])
+    const [tracks, setTracks] = useState(() => {
+        const savedTracks = localStorage.getItem('tracks')
+        if (savedTracks){
+            return JSON.parse(savedTracks)
+        }
+        return[
+                {id:'1',title:'Lofi - 1',prew:'./src/assets/lofi__prew-1.jpg',time:'2:30',music:'src/assets/Chill_Hip-Hop_Beats_-_Long_Travel_73622991.mp3'},
+                {id:'2',title:'Lofi - 2',prew:'./src/assets/lofi__prew-2.jpg',time:'1:30',music:'src/assets/Detskie_pesni_Spokojjnaya_fonovaya_muzyka_LO-FI_BEATS_Chillhop_Music_Japanese_Lofi_Lo_Fi_Hip_Hop_-_Lou-ajj_Ritmy_dlya_Meditacii_79645134.mp3'},
+                {id:'3',title:'Lofi - 3',prew:'./src/assets/lofi__prew-3.jpg',time:'3:30',music:'src/assets/kirpichnye-pereulki-2-fb419d.mp3'}
+    ]})
     const [selectedTrack, setSelectedTrack] = useState(lofi)
-    const [addTrack, setAddTrack] = useState()
-
-
+    const [openTrack, setOpenTrack] = useState(false)
+    const [changeTrack, setChangeTrack] = useState()
+    const [changeTime, setChangeTime] = useState()
     
 
     useEffect(() => {
@@ -62,12 +74,18 @@ const FocusTimer = () => {
     useEffect(() => {
         localStorage.setItem('cycle', JSON.stringify(cycle))
     }, [cycle])
-    
+
     useEffect(() => {
-        fetch('http://localhost:3001/trcks')
-            .then((response) => response.json())
-            .then(setTracks)
-    }, [])
+        localStorage.setItem('tracks', JSON.stringify(tracks))
+    }, [tracks])
+
+
+    
+    // useEffect(() => {
+    //     fetch('http://localhost:3001/trcks')
+    //         .then((response) => response.json())
+    //         .then(setTracks)
+    // }, [])
 
     const changeCycle = (newCycle) => {
         setCycle(newCycle) 
@@ -102,40 +120,49 @@ const FocusTimer = () => {
         }else {
             setIsOpen(true)
         }
-        console.log(isOpen)
     }
     const selectTracks = (track) => {
         setSelectedTrack(track.music)
-        console.log (selectedTrack)
     }   
-    const addedTracks = (title) => {
-        const newTrack = {
-            title,
-            prew: './src/assets/lofi__prew-3.jpg', 
-            time: '3:30',
-            music: 'src/assets/kirpichnye-pereulki-2-fb419d.mp3'
-        }
-
-        fetch('http://localhost:3001/trcks',{
-            method: 'POST',
-            body: JSON.stringify(newTrack)
-        })
-            .then((response) => response.json())
-            .then((addedTrack) => {
-                setTracks((prevTrack) => [...prevTrack, addedTrack])
-            })
+    const openTracks = () => {
+        if(openTrack) {
+            setOpenTrack(false)
+        }else(
+            setOpenTrack(true)
+        )
     }
+
+    const changeTitle = (title) => {
+        setChangeTrack(title)
+    }
+    const changeTimes = (title) => {
+        setChangeTime(title)
+    }
+
+    
+
+    const addedTracks = () => {
+            const newTrack = {
+                title: changeTrack,
+                id: crypto?.randomUUID(),
+                prew: './src/assets/icon-new-music.png', 
+                time: changeTime,
+                music: 'src/assets/kirpichnye-pereulki-2-fb419d.mp3'
+            }
+
+            setTracks((prevTrack) =>[...prevTrack, newTrack])
+
+    }
+
 
 
 
     return (
         <div className="focus-timer">
-            <button onClick={openClick} className="choose-track" >Выбрать трек</button>
-            <form action="" >
-                <input type="text" onChange={(event) => addedTracks(event.target.value)}/>
-                <input type="time" />
-                <button type="button">lj,fdbnm</button>
-            </form>
+            <div className="addedAndSkip">
+                <Button onClick={openClick} className="choose-track"  title = {'Выбрать трек'}/>
+                <Button onClick={openTracks} className="choose-track"  title = {'Добавить трек'}/>
+            </div>
                 {isOpen && (
                 <div className="div__overflow">
                     {tracks.map((track) => (
@@ -149,6 +176,10 @@ const FocusTimer = () => {
                     />
                     ))}
                 </div>
+                )}
+
+                {openTrack && (
+                    <Form changeTimes = {changeTimes} changeTitle = {changeTitle} addedTracks = {addedTracks}/>
                 )}
             <TimeMode props={{ time, mode}} />
             <Control 

@@ -1,4 +1,5 @@
 .focus-timer{
+    position: relative;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -8,11 +9,17 @@
 }
 .div__overflow{
     display: flex;
-    background-color: #c575756a;
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    border: 4px solid rgba(255, 255, 255, 0.4);
     border-radius: 40px;
     flex-direction: column;
     align-items: center;
     max-height: 70vh;
     max-width: 12vw;
     overflow:auto;
+}
+.addedAndSkip{
+    display: flex;
+    justify-content: space-between;
 }
