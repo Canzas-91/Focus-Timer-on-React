@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef} from "react"
+// Отлично!
 import lofi from "../assets/Detskie_pesni_Spokojjnaya_fonovaya_muzyka_LO-FI_BEATS_Chillhop_Music_Japanese_Lofi_Lo_Fi_Hip_Hop_-_Lou-ajj_Ritmy_dlya_Meditacii_79645134.mp3"
 import TimeMode from "./TimeMode"
 import Control from "./Control"
@@ -9,7 +10,7 @@ import Form from "./Form"
 import { jsxs } from "react/jsx-runtime"
 const FocusTimer = () => {
     
-    const [time, setTime] = useState(25 * 60);
+    const [time, setTime] = useState(5);
     const [isRunning, setIsRunning] = useState(false);
     const [mode, setMode] = useState('Work')
     const [cycle, setCycle] = useState(() => {
@@ -40,6 +41,8 @@ const FocusTimer = () => {
     
 
     useEffect(() => {
+        console.log('cycle :>> ', cycle);
+        console.log('completedCycle :>> ', completedCycle);
         if (isRunning) {
                 audioRef.current.play()
                 const timer= setInterval(() => {
@@ -47,18 +50,19 @@ const FocusTimer = () => {
                         if (time <= 1){
                             if (mode === 'Work'){
                                 setMode('Break')
-                                return (5 * 60)
+                                return (10)
                             }else{
                                 if (cycle === (completedCycle + 1)) {
                                     setIsRunning(false)
-                                    setTime(25 * 60)
+                                    setTime(5)
                                     setMode('Work')
+                                    // BUG: Значени completedCycle никогда не изменится, нужно выяснить почему
                                     setCompletedCycle((upCycle) => {
                                     return upCycle + 1
                                 })
                                 }else{
                                     setMode('Work')
-                                    setTime(25 * 60)
+                                    setTime(5)
                                 }
                                 return audioRef.current.pause()
                             }
@@ -69,6 +73,9 @@ const FocusTimer = () => {
                 return () => {clearInterval(timer)}
         }
         return audioRef.current.pause()
+        // React Hook useEffect has missing dependencies: 'completedCycle' and 'cycle'. Either include them or remove the dependency array. You can also replace multiple useState variables with useReducer if 'setTime' needs the current value of 'cycle'.
+        // Это может привести к багам, не стоит опускать deps в useEffect
+        // Придется чуть иначе написать условие в if, опираясь на isRunning и https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/paused 
     },[isRunning, mode])
 
     useEffect(() => {
@@ -112,6 +119,7 @@ const FocusTimer = () => {
     }
     
     const startTimer = () => {
+        // setIsRunning(!isRunning); // вместо if
         if (!isRunning) {
             setIsRunning(true);
 
@@ -170,6 +178,7 @@ const FocusTimer = () => {
 
 
 
+    console.log("Focus Time render")
 
     return (
         <div className="focus-timer">
