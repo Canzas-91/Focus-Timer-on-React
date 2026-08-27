@@ -4,6 +4,7 @@
     align-items: center;
     border: 4px inset var(--color-white);
     border-radius: 20px;
+    margin-bottom: 30px;
     padding: 5px 20px;
     gap: 20px;
 }
