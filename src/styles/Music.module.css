@@ -1,0 +1,17 @@
+.music{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 4px inset var(--color-white);
+    border-radius: 20px;
+    padding: 5px 20px;
+    gap: 20px;
+}
+.musicP{
+    font-size: 24px;
+    color: var(--color-white);
+}
+
+.volumeSlider {
+    color: blue;
+}

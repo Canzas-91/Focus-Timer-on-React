@@ -1,5 +1,6 @@
 import "../styles/CountCycle.css";
 
+// Это норм, только лишний пропс убрать
 const CountCycle = ({cycle, changeCycle}) => {
     return (
 
