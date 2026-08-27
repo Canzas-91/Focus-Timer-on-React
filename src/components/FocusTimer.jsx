@@ -75,17 +75,13 @@ const FocusTimer = () => {
         localStorage.setItem('cycle', JSON.stringify(cycle))
     }, [cycle])
 
-    useEffect(() => {
-        localStorage.setItem('tracks', JSON.stringify(tracks))
-    }, [tracks])
-
 
     
-    // useEffect(() => {
-    //     fetch('http://localhost:3001/trcks')
-    //         .then((response) => response.json())
-    //         .then(setTracks)
-    // }, [])
+    useEffect(() => {
+        fetch('http://localhost:3001/trcks')
+            .then((response) => response.json())
+            .then(setTracks)
+    }, [])
 
     const changeCycle = (newCycle) => {
         setCycle(newCycle) 
@@ -139,8 +135,6 @@ const FocusTimer = () => {
         setChangeTime(title)
     }
 
-    
-
     const addedTracks = () => {
             const newTrack = {
                 title: changeTrack,
@@ -149,8 +143,18 @@ const FocusTimer = () => {
                 time: changeTime,
                 music: 'src/assets/kirpichnye-pereulki-2-fb419d.mp3'
             }
-
-            setTracks((prevTrack) =>[...prevTrack, newTrack])
+            fetch('http://localhost:3001/trcks', {
+                method: 'POST',
+                body: JSON.stringify(newTrack)
+            })
+                .then((response) => response.json())
+                .then((addedTracks) => {
+                    if (changeTrack.trim().length > 0 && changeTime.trim().length > 0){
+                        setTracks((prev) => [...prev, newTrack])
+                    }else{
+                        console.log('Введите время и название')
+                    }
+                })
 
     }
 
