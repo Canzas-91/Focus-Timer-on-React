@@ -72,11 +72,19 @@ const FocusTimer = () => {
     },[isRunning, mode])
 
     useEffect(() => {
+        if(selectedTrack){
+            if(isRunning){
+                audioRef.current.play()
+            }else{
+                audioRef.current.pause()
+            }
+        }
+    }, [selectedTrack, isRunning])
+
+    useEffect(() => {
         localStorage.setItem('cycle', JSON.stringify(cycle))
     }, [cycle])
 
-
-    
     useEffect(() => {
         fetch('http://localhost:3001/trcks')
             .then((response) => response.json())
@@ -106,6 +114,7 @@ const FocusTimer = () => {
     const startTimer = () => {
         if (!isRunning) {
             setIsRunning(true);
+
         }else {
             setIsRunning(false);
         }
@@ -119,7 +128,8 @@ const FocusTimer = () => {
     }
     const selectTracks = (track) => {
         setSelectedTrack(track.music)
-    }   
+    } 
+
     const openTracks = () => {
         if(openTrack) {
             setOpenTrack(false)
@@ -186,7 +196,7 @@ const FocusTimer = () => {
                     <Form changeTimes = {changeTimes} changeTitle = {changeTitle} addedTracks = {addedTracks}/>
                 )}
             <TimeMode props={{ time, mode}} />
-            <Control 
+            <Control
                 isRunning={isRunning} 
                 startTimer={startTimer} 
                 cycle = {cycle} 
