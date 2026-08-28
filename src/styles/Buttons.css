@@ -12,7 +12,7 @@
 
 .next-button{
     background-image: url('../assets/next-button.svg');
-    background-size: 35px 35px;
+    background-size: 45px 45px;
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -23,9 +23,16 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+.play-button{
+    background-image: url('../assets/play-button.svg');
+    background-size: 35px 35px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .reverse-button{
     background-image: url('../assets/reverse-button.svg');
-    background-size: 35px 35px;
+    background-size: 45px 45px;
     background-position: center;
     background-repeat: no-repeat;
 }

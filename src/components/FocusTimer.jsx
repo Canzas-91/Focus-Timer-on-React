@@ -6,10 +6,9 @@ import Track from "./Track"
 import '../styles/FocusTimer.css'
 import Button from "./Button"
 import Form from "./Form"
-import { jsxs } from "react/jsx-runtime"
 const FocusTimer = () => {
     
-    const [time, setTime] = useState(25 * 60);
+    const [time, setTime] = useState(5);
     const [isRunning, setIsRunning] = useState(false);
     const [mode, setMode] = useState('Work')
     const [cycle, setCycle] = useState(() => {
@@ -47,20 +46,23 @@ const FocusTimer = () => {
                         if (time <= 1){
                             if (mode === 'Work'){
                                 setMode('Break')
-                                return (5 * 60)
+                                return (3)
                             }else{
                                 if (cycle === (completedCycle + 1)) {
                                     setIsRunning(false)
-                                    setTime(25 * 60)
+                                    setTime(5)
                                     setMode('Work')
-                                    setCompletedCycle((upCycle) => {
-                                    return upCycle + 1
-                                })
+                                    return setCompletedCycle(0)
                                 }else{
                                     setMode('Work')
-                                    setTime(25 * 60)
+                                    setTime(5)
                                 }
-                                return audioRef.current.pause()
+                                setCompletedCycle((upCycle) => {
+                                    return upCycle + 1
+                                })
+                                console.log('completedCycle =>>', completedCycle)
+                                audioRef.current.pause()
+                                return
                             }
                         }
                         return time - 1
@@ -158,7 +160,7 @@ const FocusTimer = () => {
                 body: JSON.stringify(newTrack)
             })
                 .then((response) => response.json())
-                .then((addedTracks) => {
+                .then(() => {
                     if (changeTrack.trim().length > 0 && changeTime.trim().length > 0){
                         setTracks((prev) => [...prev, newTrack])
                     }else{
