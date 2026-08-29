@@ -15,9 +15,9 @@ const Control = ({startTimer, cycle, changeCycle, clickNextButton, clickBackButt
                 <Button className={clsx(`${styles.button} ${styles.icon}`,{
                         [styles.play] : isRunning === false,
                         [styles.pause] : isRunning === true
-                    })} 
+                })}
                     onClick = {startTimer}/>
-                <Button className= {`${styles.button} ${styles.next} ${styles.icon}`} onClick = {clickNextButton}/>
+                <Button className={`${styles.button} ${styles.next} ${styles.icon}`}  onClick = {clickNextButton}/>
             </div>
             <CountCycle cycle = {cycle} changeCycle = {changeCycle}/>
         </div>
