@@ -6,7 +6,6 @@ import Track from "./Track"
 import '../styles/FocusTimer.css'
 import Button from "./Button"
 import Form from "./Form"
-import styles from"../styles/Buttons.module.css"
 const FocusTimer = () => {
     
     const [time, setTime] = useState(5);
@@ -23,16 +22,12 @@ const FocusTimer = () => {
     const [completedCycle, setCompletedCycle] = useState(0)
     const audioRef = useRef(null)
     const [isOpen, setIsOpen] = useState(false)
-    const [tracks, setTracks] = useState(() => {
-        const savedTracks = localStorage.getItem('tracks')
-        if (savedTracks){
-            return JSON.parse(savedTracks)
-        }
-        return[
+    // убрал взаимодействие с LocalStorage так как треки беруться с json-server
+    const [tracks, setTracks] = useState([
                 {id:'1',title:'Lofi - 1',prew:'./src/assets/lofi__prew-1.jpg',time:'2:30',music:'src/assets/Chill_Hip-Hop_Beats_-_Long_Travel_73622991.mp3'},
                 {id:'2',title:'Lofi - 2',prew:'./src/assets/lofi__prew-2.jpg',time:'1:30',music:'src/assets/Detskie_pesni_Spokojjnaya_fonovaya_muzyka_LO-FI_BEATS_Chillhop_Music_Japanese_Lofi_Lo_Fi_Hip_Hop_-_Lou-ajj_Ritmy_dlya_Meditacii_79645134.mp3'},
                 {id:'3',title:'Lofi - 3',prew:'./src/assets/lofi__prew-3.jpg',time:'3:30',music:'src/assets/kirpichnye-pereulki-2-fb419d.mp3'}
-    ]})
+    ])
     const [selectedTrack, setSelectedTrack] = useState(lofi)
     const [openTrack, setOpenTrack] = useState(false)
     const [changeTrack, setChangeTrack] = useState()
@@ -122,11 +117,22 @@ const FocusTimer = () => {
             setIsRunning(false);
         }
     }
+
     const openClick = () => {
         if(isOpen){
             setIsOpen(false)
         }else {
             setIsOpen(true)
+        }
+    }
+    // функуия кнопки ресет 
+
+    const isReset = (click) => {
+        if (click) {
+            setTime(5)
+            setIsRunning(false)
+            setMode('Work')
+            setCompletedCycle(0)
         }
     }
     const selectTracks = (track) => {
@@ -177,8 +183,8 @@ const FocusTimer = () => {
     return (
         <div className="focus-timer">
             <div className="addedAndSkip">
-                <Button onClick={openClick} className={`${styles.button} ${styles.track}`}  title = {'Выбрать трек'}/>
-                <Button onClick={openTracks} className={`${styles.button} ${styles.track}`}  title = {'Добавить трек'}/>
+                <Button onClick={openClick} className="choose-track"  title = {'Выбрать трек'}/>
+                <Button onClick={openTracks} className="choose-track"  title = {'Добавить трек'}/>
             </div>
                 {isOpen && (
                 <div className="div__overflow">
@@ -198,7 +204,8 @@ const FocusTimer = () => {
                 {openTrack && (
                     <Form changeTimes = {changeTimes} changeTitle = {changeTitle} addedTracks = {addedTracks}/>
                 )}
-            <TimeMode props={{ time, mode}} />
+            <TimeMode props={{ time, mode, completedCycle}} />
+            <Button className = 'reset-button' title = 'Reset' onClick = {isReset}/>
             <Control
                 isRunning={isRunning} 
                 startTimer={startTimer} 
@@ -215,3 +222,6 @@ const FocusTimer = () => {
 }
 
 export default FocusTimer
+
+// На счёт clsx - у меня вопрос он используется в основной для того что я делал, то есть меняет условно класс по условию?
+// То есть, он для того что бы упростить именно вот эту работу с классами или для чего то ещё ?
