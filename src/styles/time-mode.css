@@ -7,6 +7,9 @@
 .time-mode-p span {
   font-size: 16px;
 }
+.time-mode__count-cycle{
+  font-size: 16px;
+}
 
 .time-mode-h1 {
   font-size: 200px;

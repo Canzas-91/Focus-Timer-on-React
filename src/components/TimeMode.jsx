@@ -1,7 +1,6 @@
-import React from "react"
 import '../styles/time-mode.css'
 const TimeMode = ({props}) => {
-    const { time, mode} = props
+    const { time, mode, completedCycle} = props
     const formatTime = (seconds) => {
         const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
@@ -14,8 +13,8 @@ const TimeMode = ({props}) => {
     return (
         <div className="time-mode">
             <p className="time-mode-p" mode = {mode}>Time Mode: {mode}</p>
+            <p className="time-mode__count-cycle">Прошло циклов: {completedCycle}</p>
             <h1 className="time-mode-h1">{formatTime(time)}</h1>
-            
         </div>
     )
 }

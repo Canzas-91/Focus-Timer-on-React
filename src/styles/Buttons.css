@@ -53,3 +53,20 @@
     transform: translateX(0);
 }
 
+.reset-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-top: auto;
+    border-radius: 15px;
+    width: 8vw;
+    height: 5vh;
+    color: var(--color-white);
+    transform: translateX(0);
+    font-size: 24px;
+}
+.reset-button:hover{
+    color: #7a7a7a;
+    background-color: #fff;
+}
