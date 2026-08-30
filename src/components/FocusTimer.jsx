@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect, useRef} from "react"
 import lofi from "../assets/Detskie_pesni_Spokojjnaya_fonovaya_muzyka_LO-FI_BEATS_Chillhop_Music_Japanese_Lofi_Lo_Fi_Hip_Hop_-_Lou-ajj_Ritmy_dlya_Meditacii_79645134.mp3"
 import TimeMode from "./TimeMode"
@@ -36,38 +37,38 @@ const FocusTimer = () => {
 
     useEffect(() => {
         if (isRunning) {
-                audioRef.current.play()
                 const timer= setInterval(() => {
                     setTime((time) => {
-                        if (time <= 1){
-                            if (mode === 'Work'){
-                                setMode('Break')
-                                return (3)
-                            }else{
-                                if (cycle === (completedCycle)) {
-                                    setIsRunning(false)
-                                    setTime(5)
-                                    setMode('Work')
-                                    return setCompletedCycle(0)
-                                }else{
-                                    setMode('Work')
-                                    setTime(5)
-                                }
-                                setCompletedCycle((upCycle) => {
-                                    return upCycle + 1
-                                })
-                                console.log('completedCycle =>>', completedCycle)
-                                audioRef.current.pause()
-                                return
-                            }
-                        }
-                        return time - 1
-                    });
+                            return time - 1
+                        });
                 }, 1000);
-                return () => {clearInterval(timer)}
+                return (() => clearInterval(timer))
+            }
+        },[isRunning])
+
+    useEffect(() => {
+        if (time === 0 && mode === 'Work'){
+            setTime(3)
+            setMode('Break')
         }
-        return audioRef.current.pause()
-    },[isRunning, mode])
+        if (time === 0 && mode === 'Break'){
+             if (cycle === (completedCycle + 1)) {
+                setIsRunning(false)
+                setTime(5)
+                setMode('Work')
+                return setCompletedCycle(0)
+            }else{
+                setMode('Work')
+                setTime(5)
+            }
+            setCompletedCycle((upCycle) => {
+                return upCycle + 1
+            })
+            setTime(5)
+            setMode('Work')
+        }
+
+    }, [time, mode, cycle, completedCycle])
 
     useEffect(() => {
         if(selectedTrack){
