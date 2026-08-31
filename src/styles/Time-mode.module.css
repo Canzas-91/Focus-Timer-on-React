@@ -1,4 +1,4 @@
-.time-mode-p {
+.timeModeP {
   font-size: 24px;
   font-weight: 700;
   color: var(--color-white);
@@ -7,7 +7,7 @@
 .time-mode-p span {
   font-size: 16px;
 }
-.time-mode__count-cycle{
+.time-mode__count-cycle {
   font-size: 16px;
 }
 
@@ -19,9 +19,9 @@
 .time-mode-h1 span {
   font-size: 48px;
 }
-.time-mode{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.timeMode {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
