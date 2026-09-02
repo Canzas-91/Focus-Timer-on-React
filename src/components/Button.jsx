@@ -1,12 +1,22 @@
-import '../styles/Buttons.css'
+import styles from "../styles/Buttons.module.css";
+import clsx from "clsx";
 const Button = (props) => {
-    const { className, onClick, title } = props
-    return (
+  const { onClick, title, type } = props;
+  return (
+    <button
+      className={clsx(`${styles["buttons-control"]}`, {
+        [styles.track]: type === "track",
+        [styles.reset]: type === "reset",
+        [styles.reverse]: type === "reverse",
+        [styles.play]: type === "play",
+        [styles.pause]: type === "pause",
+        [styles.next]: type === "next",
+      })}
+      onClick={onClick}
+    >
+      {title}
+    </button>
+  );
+};
 
-        <button className={`buttons-control ${className}`} onClick={onClick}>
-            {title}
-        </button>
-    )
-}
-
-export default Button
+export default Button;

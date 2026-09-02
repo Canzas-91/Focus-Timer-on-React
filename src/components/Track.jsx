@@ -1,16 +1,16 @@
-import "../styles/Track.css"
+import styles from "../styles/Track.module.css";
 
 const Track = (props) => {
-    const {tracks, id, prew, title, time, onSelect} = props
+  const { id, prew, title, time, onSelect } = props;
 
-    return (
-        <div className="track" id = {id} onClick={onSelect}>
-            <img className="track__prew" src={prew}/>
-            <div className="track__info">
-                <h3 className="track__info-title">{title}</h3>
-                <p className="track__info-time">{time}</p>
-            </div>
-        </div>
-    )
-}
-export default Track
+  return (
+    <div className={styles.track} id={id} onClick={onSelect}>
+      <img className="track__prew" src={prew} />
+      <div className={styles.track__info}>
+        <h3 className="track__info-title">{title}</h3>
+        <p className="track__info-time">{time}</p>
+      </div>
+    </div>
+  );
+};
+export default Track;
